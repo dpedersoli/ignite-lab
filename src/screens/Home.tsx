@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native'
 import { HStack, IconButton, VStack, useTheme, Text, Heading, FlatList, Center } from 'native-base';
 import { SignOut } from 'phosphor-react-native'
 import { ChatTeardropText } from 'phosphor-react-native'
@@ -11,9 +12,23 @@ import { Order, OrderProps } from '../components/Order'
 
 export const Home = () => {
   const [statusSelected, setStatusSelected] = useState<'open' | 'closed'>('open')
-  const [orders, setOrders] = useState<OrderProps[]>([]);
+  const [orders, setOrders] = useState<OrderProps[]>([{
+    id: '123',
+    patrimony: '123456',
+    when: '18/07/2022 às 14:00',
+    status: 'open'
+  }]);
 
+  const navigation = useNavigation()  //aqui eu faço recurso do uso da navegação das páginas armazenando na var 'navigation'
   const { colors } = useTheme()
+
+  const handleNewOrder = () => {
+    navigation.navigate('new')
+  }
+
+  const handleOpenDetails = (orderId: string) => { //recebo o 'id' referente à 'order' específica para abrir suas especificações
+    navigation.navigate('details', { orderId }) //aqui eu passo o parãmetro do 'orderId'
+  }
 
   return (
     <VStack flex={1} pb={6} bg="gray.700">
@@ -67,7 +82,7 @@ export const Home = () => {
         <FlatList
           data={orders}
           keyExtractor={item => item.id}
-          renderItem={({ item }) => <Order data={item} />}
+          renderItem={({ item }) => <Order data={item} onPress={() => handleOpenDetails(item.id)} />}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 100 }}
           ListEmptyComponent={() => (
@@ -81,7 +96,8 @@ export const Home = () => {
           )}
         />
 
-        <Button title="Nova Solicitação" />
+        <Button title="Nova Solicitação" onPress={handleNewOrder} />
+        {/* aqui eu chamo a função que me direciona para outra página */}
       </VStack>
     </VStack>
   );
