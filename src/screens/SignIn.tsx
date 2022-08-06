@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Alert } from 'react-native'
 
-import auth from '@react-native-firebase/auth' //importando o uso do Firebase
+import auth from '@react-native-firebase/auth'
 
 import { VStack, Heading, Icon, useTheme } from 'native-base'
 import { Envelope, Key } from 'phosphor-react-native'
@@ -11,14 +11,14 @@ import { Input } from '../components/Input'
 import { Button } from '../components/Button'
 
 export const SignIn = () => {
-  const [isLoading, setIsLoading] = useState(false) //loading
+  const [isLoading, setIsLoading] = useState(false)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const { colors } = useTheme()
 
-  function handleSignIn() { //faço aqui o handle do 'auth'
-    if (!email || !password) { //se e-mail OU senha é nulo irá emitir um alerta
+  function handleSignIn() {
+    if (!email || !password) {
       return Alert.alert('Entrar', 'Informe e-mail e senha');
     }
     setIsLoading(true);
@@ -29,8 +29,8 @@ export const SignIn = () => {
         console.error(error)
         setIsLoading(false);
 
-        if (error.code == 'auth/invalid-email') { //a rota de 'auth/invalid-email' é uma das rotas de retorno de erro do firebase dentro do '.code', que no caso é do e-mail invávalido (existem muitas outras, e o ideal é setar todas as possibilidades dentro do 'error.code')
-          return Alert.alert('Entrar', 'Email inválido.') //a primeira aspas 'Entrar' seria o título do Alert do react-native, e a segunda aspas é o texto dentro do alert
+        if (error.code == 'auth/invalid-email') {
+          return Alert.alert('Entrar', 'Email inválido.')
         }
 
         if (error.code == 'auth/wrong-password') {
@@ -42,7 +42,7 @@ export const SignIn = () => {
         }
 
         return Alert.alert('Entrar', 'Não foi possível acessar')
-      }) //'auth()' é a promise de autenticação do firebase
+      })
 
   }
 
@@ -73,7 +73,7 @@ export const SignIn = () => {
         mt={4}
         onPress={handleSignIn}
         isLoading={isLoading}
-      />{/*o próprio componente do native-base tem uma propriedade (isLoading) para efeito de 'laoding' -> ele desabilita a possibilidade de clicar no botão novamente e gera o 'load'*/}
+      />
 
     </VStack>
   )
