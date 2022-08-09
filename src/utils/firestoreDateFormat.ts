@@ -1,8 +1,8 @@
-import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'; //'FirebaseFirestoreTypes' me permite usar as tipagens do próprio firestore
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 
-export const dateFormat = (timestamp: FirebaseFirestoreTypes.Timestamp) => { //paso o tipo dodo como 'FirebaseFirestoreTypes.Timestamp' a partir do 'timestamp'
+export const dateFormat = (timestamp: FirebaseFirestoreTypes.Timestamp) => {
   if (timestamp) {
-    const date = new Date(timestamp.toDate()); //'toDate()' passa uma data entendível p/ o JS
+    const date = new Date(timestamp.toDate());
 
     const day = date.toLocaleDateString('pt-BR');
     const hour = date.toLocaleTimeString('pt-BR');

@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'; //usando o 'useEffect' p/ renderizar a página a cada nova 'solicitação'
+import { useState, useEffect } from 'react';
 import { Alert } from 'react-native'
 import auth from '@react-native-firebase/auth'
-import firestore from '@react-native-firebase/firestore'; //importação do firestore p/ buscar dele os dados
+import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native'
 import { HStack, IconButton, VStack, useTheme, Text, Heading, FlatList, Center } from 'native-base';
 import { SignOut } from 'phosphor-react-native'
@@ -17,7 +17,7 @@ import { Loading } from '../components/Loading'
 import { Order, OrderProps } from '../components/Order'
 
 export const Home = () => {
-  const [isLoading, setIsLoading] = useState(true) //eu deixeo 'true' pois no momento que a tela está abrindo ele já verá o 'loading'
+  const [isLoading, setIsLoading] = useState(true)
   const [statusSelected, setStatusSelected] = useState<'open' | 'closed'>('open')
   const [orders, setOrders] = useState<OrderProps[]>([]);
 
@@ -42,11 +42,11 @@ export const Home = () => {
   }
 
   useEffect(() => {
-    setIsLoading(true); //quando eu trocar o filtro ('em andamento' / 'finalizados') eu vou fazer uma nova requisição e issoa precisa do 'laoding' ativo na tela
+    setIsLoading(true);
 
-    const subscriber = firestore() //requisito que "vai no firestore, dentro da coleção 'orders' e faça um filtro como o abaixo ('.where')"
+    const subscriber = firestore()
       .collection('orders')
-      .where('status', '==', statusSelected) //faça o filtro e peque as coisas onde o 'status' seja '==' ao valor de 'statusSelected' (que é 'open'/'closed')
+      .where('status', '==', statusSelected)
       .onSnapshot(snapshot => {
         const data = snapshot.docs.map(doc => {
           const { patrimony, description, status, created_at } = doc.data();
@@ -57,12 +57,12 @@ export const Home = () => {
             description,
             status,
             when: dateFormat(created_at)
-          } //vou retornar para o 'data' o conjunto de dados que quero utilizar
-        }); //'onSnapshot' atualiza os dados em tempo real dentro da aplicação sem o usuário precisar fazer nada -> no caso eu acesso todos os 'docs' (documentos) dentro do 'snapshot' e passo um 'map' neles (array), e para cada item percorrido dentro do 'data' (no caso 'doc.data' pelo parâmetro passado) eu farei isso sobre as infos dentro de 'patrimony, description, status, created_at'
+          }
+        });
 
         setOrders(data);
         setIsLoading(false);
-      }); // passo o valor da var 'data' p/ dentro do 'setOrders' e determino o 'loading' como 'false'
+      });
 
     return subscriber;
   }, [statusSelected]);
