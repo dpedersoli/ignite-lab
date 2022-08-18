@@ -50,7 +50,7 @@ export const Details = () => {
           closed_at: firestore.FieldValue.serverTimestamp()
         })
         .then(() => {
-          Alert.alert('Solicitação', 'Solicitação encerrada.')
+          Alert.alert('Solicitação', 'Solicitacao encerrada.')
           navigation.goBack()
         })
         .catch((err) => {
