@@ -1,4 +1,4 @@
-# Criando aplicação para gerenciar notificações de chamaos, em React Native com base no Ignite-lab
+# Aplicação para gerenciar notificações de chamaos, em React Native com base no Ignite-lab
 
 ## Tecnologias ⚛️
 # Projeto com uso de
